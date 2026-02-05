@@ -10,7 +10,7 @@ screen.tracer(0)
 
 player = Player()
 screen.listen()
-car = CarManager()
+car_manager = CarManager()
 
 screen.onkeypress(player.move_up, "Up")
 screen.onkeypress(player.move_up, "w")
@@ -19,7 +19,14 @@ game_is_on = True
 while game_is_on:
     time.sleep(0.1)
     screen.update()
+    car_manager.create_car()
+    car_manager.move()
 
-    car.create_car()
-    car.move()
+    for cars in car_manager.car_list:
+        if cars.distance(player) < 20:
+            print("You lost")
+            game_is_on = False
+            exit()
 
+
+screen.exitonclick()
